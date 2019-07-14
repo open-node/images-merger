@@ -1,18 +1,39 @@
-# image-slider-push
+# images-merger
+
+用来将多个小图片自动合成一个大图(透明背景 png 类型), 一般为了减少站点小图片的请求次数, 加速网站或游戏的加载
 
 <pre>
-npm install image-slider-push --save
+npm install images-merger --save
 <pre>
 
 ```js
-const Slider = require('image-slider-push');
+// In browser
+// <input type="file" id="select-imgs" multiple accept="image/*">
 
-Slider({
-  width: 400,
-  sleep: 20, // 每次push后暂停多久单位毫秒
-  dy: 2, // 每次向上移动的距离，单位像素
-  max: 3, // 容易内最多容纳的图片数量
-  container: document.getElementById('container'),// 图片展示所在的容器
-  queue: [], // 图片路径队列, 外部不断的push
-});
+const merger = new Merger(document.getElementById('mycanvas'), Image);
+const input = document.getElementById('select-imgs');
+input.onchange = async () => {
+  const [data, map] = await merger.merge(input.files);
+  console.log(data); // 合并后的图片数据，base64
+  console.log(map); // 合并后的图片名字、定位、宽高信息
+};
+```
+
+```js
+// In node.js
+// npm install canvas --save
+const { createCanvas, Image } = require("canvas");
+const fs = require("fs");
+const Merger = require("./src/merger");
+
+(async () => {
+  const dir = process.argv[2];
+  const files = fs.readdirSync(dir).map(x => `${dir}/${x}`);
+
+  const canvas = createCanvas();
+  const merger = new Merger(canvas, Image);
+  const [data, map] = await merger.merge(files);
+  fs.writeFileSync("./test.png", data);
+  fs.writeFileSync("./test.map", map.map(x => x.join(" ")).join("\n"));
+})();
 ```

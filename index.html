@@ -13,10 +13,7 @@ canvas {
 <script src="./browser.js"></script>
 <label for="avatar">Choose some picture:</label>
 <div>
-  <input type="file"
-       id="select-imgs" name="imgs"
-       multiple
-       accept="image/png, image/jpeg, image/bmp, image/gif, image/jpg">
+  <input type="file" id="select-imgs"  multiple accept="image/*">
 </div>
 <div>
   <h3>合并后的图片信息</h3>
@@ -24,13 +21,11 @@ canvas {
 </div>
 <canvas id="mycanvas"></canvas>
 <script>
-const reader = new FileReader();
 const textarea = document.getElementById('map');
 const merger = new Merger(document.getElementById('mycanvas'), Image);
 const input = document.getElementById('select-imgs');
 input.onchange = async () => {
   const [data, map] = await merger.merge(input.files);
-  console.log(map);
   textarea.innerHTML = `<pre>${map.map(x => x.join(' ')).join('\n')}</pre>`;
 };
 </script>
