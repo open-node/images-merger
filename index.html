@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>图片合并</title>
+<style>
+canvas {
+  border: 1px solid #000;
+  display: block;
+  background: #000;
+}
+</style>
+</head>
+<body>
+<script src="./browser.js"></script>
+<label for="avatar">Choose some picture:</label>
+<div>
+  <input type="file"
+       id="select-imgs" name="imgs"
+       multiple
+       accept="image/png, image/jpeg, image/bmp, image/gif, image/jpg">
+</div>
+<div>
+  <h3>合并后的图片信息</h3>
+  <div id="map"></div>
+</div>
+<canvas id="mycanvas"></canvas>
+<script>
+const reader = new FileReader();
+const textarea = document.getElementById('map');
+const merger = new Merger(document.getElementById('mycanvas'), Image);
+const input = document.getElementById('select-imgs');
+input.onchange = async () => {
+  const [data, map] = await merger.merge(input.files);
+  console.log(map);
+  textarea.innerHTML = `<pre>${map.map(x => x.join(' ')).join('\n')}</pre>`;
+};
+</script>
+</body>
+</html>
