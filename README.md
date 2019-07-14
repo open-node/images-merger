@@ -4,7 +4,7 @@
 
 <pre>
 npm install images-merger --save
-<pre>
+</pre>
 
 ```js
 // In browser
