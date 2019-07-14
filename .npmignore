@@ -19,5 +19,6 @@ docs/*
 npm-debug.log
 coverage
 coverage/*
+assets/*
 demo/*
 index.html
