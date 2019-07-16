@@ -1,8 +1,11 @@
 {
   "name": "images-merger",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "images-merger-cli": "bin/merge-images.js"
+  },
   "scripts": {
     "build:browser": "browserify src/merger.js -s Merger > browser.js",
     "build:node": "browserify src/merger.js --node -s Merger > index.js",
@@ -13,8 +16,10 @@
   },
   "author": "Redstone Zhao",
   "license": "MIT",
-  "devDependencies": {
-    "browserify": "^16.2.2",
+  "dependencies": {
     "canvas": "^2.5.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.2"
   }
 }

@@ -6,8 +6,8 @@
 npm install images-merger --save
 </pre>
 
+## In browser
 ```js
-// In browser
 // <input type="file" id="select-imgs" multiple accept="image/*">
 
 const merger = new Merger(document.getElementById('mycanvas'), Image);
@@ -19,8 +19,8 @@ input.onchange = async () => {
 };
 ```
 
+## In node.js
 ```js
-// In node.js
 // npm install canvas --save
 const { createCanvas, Image } = require("canvas");
 const fs = require("fs");
@@ -36,4 +36,14 @@ const Merger = require("./src/merger");
   fs.writeFileSync("./test.png", data);
   fs.writeFileSync("./test.map", map.map(x => x.join(" ")).join("\n"));
 })();
+```
+
+## In cli
+<pre>npm install images-merger -g</pre>
+
+```
+// 第一个参数为要合并的原始图片目录路径
+// 第二参数为要生成的图片路径（不需要后缀）
+// scale 可选的等比缩放比例， (0, 1] 默认为 1
+images-merger-cli ./sources-images-dir-path ./target-file-name-widthout-ext [scale]
 ```
