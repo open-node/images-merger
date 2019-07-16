@@ -8,7 +8,7 @@ const Merger = require("../src/merger");
   const startAt = Date.now();
   const dir = process.argv[2];
   const file = process.argv[3];
-  const scale = process.argv[4];
+  const scale = process.argv[4] || 1;
   if (!dir || !file) {
     console.log("请指定要合并的图片目录");
     console.log("Example: images-merge-cli ./images ./images/atlas 0.5");
@@ -18,7 +18,10 @@ const Merger = require("../src/merger");
 
   const canvas = createCanvas();
   const merger = new Merger(canvas, Image);
-  const [data, map] = await merger.merge(files, +scale);
+  const [data, map] = await merger.merge(
+    files,
+    Math.max(0.1, Math.min(1, scale | 0))
+  );
   fs.writeFileSync(`${file}.png`, data);
   fs.writeFileSync(`${file}.map`, map.map(x => x.join(" ")).join("\n"));
 
